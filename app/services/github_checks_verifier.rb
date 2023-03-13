@@ -80,7 +80,13 @@ class GithubChecksVerifier < ApplicationService
   end
 
   def fail_unless_all_conclusions_allowed(checks)
-    return if checks.all? { |check| check_conclusion_allowed(check) }
+    failing_checks = checks.reject { |check| check_conclusion_allowed(check) }
+    return if checks.empty?
+    
+    puts "Failing checks:"
+    puts failing_checks.reduce("") { |message, check|
+      "#{message}#{check.name}: #{check.status} (#{check.conclusion}) - #{check.html_url}\n"
+    }
 
     raise CheckConclusionNotAllowedError.new(allowed_conclusions)
   end
