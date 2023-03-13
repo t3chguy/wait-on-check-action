@@ -48,6 +48,8 @@ class GithubChecksVerifier < ApplicationService
   def apply_filters(checks)
     checks.reject! { |check| check.name == workflow_name }
     checks.select! { |check| check.name == check_name } if check_name.present?
+    checks.sort! { |a, b| b.started_at <=> a.started_at }
+    checks.uniq! { |check| check.name }
     log_checks(checks, "Checks after check_name filter:")
     apply_regexp_filter(checks)
     log_checks(checks, "Checks after Regexp filter:")
