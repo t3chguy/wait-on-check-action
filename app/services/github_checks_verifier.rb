@@ -81,7 +81,7 @@ class GithubChecksVerifier < ApplicationService
 
   def fail_unless_all_conclusions_allowed(checks)
     failing_checks = checks.reject { |check| check_conclusion_allowed(check) }
-    return if checks.empty?
+    return if failing_checks.empty?
     
     puts "Failing checks:"
     puts failing_checks.reduce("") { |message, check|
