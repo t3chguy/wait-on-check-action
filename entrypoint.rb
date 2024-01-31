@@ -6,6 +6,7 @@ allowed_conclusions = ENV["ALLOWED_CONCLUSIONS"]
 check_name = ENV["CHECK_NAME"]
 check_regexp = ENV["CHECK_REGEXP"]
 ref = ENV["REF"]
+repo = ENV["REPO"]
 token = ENV["REPO_TOKEN"]
 verbose = ENV["VERBOSE"]
 wait = ENV["WAIT_INTERVAL"]
@@ -20,7 +21,7 @@ GithubChecksVerifier.configure do |config|
   config.client.api_endpoint = api_endpoint unless /\A[[:space:]]*\z/.match?(api_endpoint)
   config.client.access_token = token
   config.ref = ref
-  config.repo = ENV["GITHUB_REPOSITORY"]
+  config.repo = repo
   config.verbose = verbose
   config.wait = wait.to_i
   config.workflow_name = workflow_name
